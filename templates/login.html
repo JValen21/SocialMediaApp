@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TraderChat log in</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="headerLogin">
+    <h1>TraderChat</h1>
+    <button
+    </div>
+    <div class="login">
+        <form action="" method=post>
+                {{ form.csrf_token }}
+                <div id="form-wrapper">
+                    <input type="text" placeholder="Username" name="username" id="username" required>
+                    <input type="password" placeholder="Password" name="psw" id="psw" required>
+                    <button type=submit value=Login>Login</button>
+                    <input type=hidden value="{{ next or '' }}" name=next>
+                </div>
+        </form>
+    </div>
+    
+</body>

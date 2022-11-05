@@ -1,0 +1,39 @@
+
+.login{
+    position: fixed; /* or absolute */
+    top: 30%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 20px solid white
+}
+
+.headerLogin {
+    position: fixed; /* or absolute */
+    top: 5%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    background-color:black;
+    width: 100%;
+    font-family: Georgia;
+    color: white;
+
+}
+
+body {
+    background-color: rgb(108, 190, 108);
+}
+
+#form-wrapper
+{
+    height:100%;
+    flex: 1 1 auto;
+    margin:0 auto;
+    display:block;
+}
+
+#form-wrapper input{
+    display:block;
+}

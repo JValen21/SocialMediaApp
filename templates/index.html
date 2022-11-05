@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>INF226</title>
+	<link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="stylesheet" href="index.css">
+
+</head>
+<body>
+    <div id="page">
+        <marquee>
+            <div id="header"></div>
+            <h1>Welcome {{current_user.id}}! </h1>
+        </marquee>
+        <main>
+            <pre id="output"></pre>
+        </main>
+        <div id="controls">
+            
+            <label for="sender">From:</label>
+            <input type="text" id="sender" name="sender" value={% if current_user.is_authenticated %}
+            {{ current_user.id }}
+          {% endif %} readonly>
+            <button type="button" id="logOut">Log out</button>
+            <span></span>
+            <label for="sender">To:</label>
+            <input type="text" id="receiver" name="receiver" value="">
+            <button type="button" id="allBtn">Show inbox</button>
+            <span></span>
+            <label for="message">Message:</label>
+            <textarea id="message" style="grid-row: span 4;">A message...</textarea>
+            <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+            <button type="button" id="sendBtn">Send message</button>
+        </div>
+        <div id="anchor"></div>
+    </div>
+</body>
+<script src="index.js"></script>
+
+</html>
