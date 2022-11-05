@@ -10,6 +10,7 @@
 }
 
 .headerLogin {
+    text-align: center;
     position: fixed; /* or absolute */
     top: 5%;
     left: 50%;
@@ -19,8 +20,16 @@
     width: 100%;
     font-family: Georgia;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center
 
 }
+.signupBtn {
+    font-size: 20px;
+    padding-left: 1100px;
+
+  }
 
 body {
     background-color: rgb(108, 190, 108);
