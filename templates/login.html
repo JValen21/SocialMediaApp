@@ -16,6 +16,7 @@
     </div>
     <div class="login">
         <form action="" method=post>
+            {{ form.csrf_token }}
                 <div id="form-wrapper">
                     <input type="text" placeholder="Username" name="username" id="username" required>
                     <input type="password" placeholder="Password" name="psw" id="psw" required>

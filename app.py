@@ -1,15 +1,21 @@
 from flask import Flask, request, render_template, send_from_directory,redirect,url_for, flash
+import flask
 from forms import *
 from apsw import Error
 import secrets
 from forms import *
 import dbHandler
 from threading import local
+from flask_wtf.csrf import CSRFProtect
 
 tls = local()
 
 #Setting up app
 app = Flask(__name__)
+
+#CSRF attack protection.
+csrf = CSRFProtect() 
+csrf.init_app(app)
 
 # The secret key enables storing encrypted session data in a cookie
 app.secret_key = secrets.token_hex(64)
@@ -60,12 +66,14 @@ def login():
         return render_template('./login.html', form=form)
         
     if request.method == 'POST': 
+        
         if form.validate_on_submit():
             username = request.form["username"]
-            password = request.form["password"]
+            password = request.form["psw"]
             try: 
                 isValid = dbHandler.check_password(username, password)
             except IndexError as e:
+                
                 return render_template('./login.html', form=form)  
             if(isValid):
                 user = user_loader(username)
@@ -78,6 +86,7 @@ def login():
                 
                 #if not is_safe_url(next):
                     #return flask.abort(400)
+               
 
                 return redirect(next or url_for('index_html'))              
     return render_template('./login.html', form=form)
@@ -95,20 +104,21 @@ def createAccount():
         psw = request.form["psw"]
         pswRepeated = request.form["psw-repeat"]
         try: 
-            pswTuple = dbManager.hashPassword(psw) 
+            pswTuple = dbHandler.hashPassword(psw) 
             pswHashed = pswTuple[0]
             salt = pswTuple[1]
-            if (dbManager.usernameExists(username) or dbManager.wrongPassword(psw, pswRepeated)):
-                return flask.redirect(flask.url_for('createAccount', form = form))
+            if (dbHandler.usernameExists(username) or dbHandler.wrongPassword(psw, pswRepeated)):
+                print("Gets tiititit")
+                return redirect(url_for('createAccount', form = form))
             else:
-                dbManager.createUser(username, pswHashed, salt)
+                dbHandler.createUser(username, pswHashed, salt)
             
                 next = flask.request.args.get('next')
                 
                 # is_safe_url checks if the url is safe for redirects.
-                if not is_safe_url(next):
-                    return flask.abort(400)
-                return flask.redirect(next or flask.url_for('login'))
+                #if not is_safe_url(next):
+                    #return flask.abort(400)
+                return redirect(next or url_for('login'))
             
         except Error as e:
             return f'ERROR: {e}'  
